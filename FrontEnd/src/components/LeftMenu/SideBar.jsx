@@ -9,10 +9,11 @@ import Zoom from "@mui/material/Zoom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
+
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
 const NavItem = ({ to, Icon, label }) => {
   const location = useLocation();
@@ -51,7 +52,8 @@ const SideBar = () => {
 
   const Controlls = [
     { title: "Settings", icon: <SettingsIcon />, link: "/settings" },
-    { title: "Logout", icon: <LogoutIcon />, link: "/logout" },
+    // { title: "Logout", icon: <LogoutIcon />, link: "/logout" } :
+    { title: "LogIn", icon: <LoginOutlinedIcon />, link: "/logout" },
   ];
 
   return (
