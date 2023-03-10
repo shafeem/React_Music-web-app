@@ -5,15 +5,21 @@ mongoose.set("strictQuery",false)
 
 dotenv.config({path:'./.env'});
 const DB= process.env.DATABASE_URL
-console.log('db started');
 
 
 
-const DBconnect = mongoose.connect(DB,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
 
-mongoose.set('strictQuery',false)
+const DBconnect = async () =>{
+    try{
+        await mongoose.connect(DB,{
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("Data Base Connected SuccessFully")
+    }catch(err){
+        console.log("err",err)
+    }
+}
 
-module.exports = DBconnect;
+
+module.exports= DBconnect;

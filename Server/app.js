@@ -7,7 +7,7 @@ const app = express()
 const userrouter = require('./routes/userrouter');
 const adminrouter = require('./routes/adminrouter');
 
-const DATABASE_URL= process.env.DATABASE_URL
+
 
 
 app.use(cors({

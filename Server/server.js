@@ -2,13 +2,7 @@ const app = require('./app')
 const mongoose = require('./config/dbconnection')
 
 
-mongoose
-        .then(()=>{
-            console.log('data base connected ..');
-        })
-        .catch((err)=>{
-            console.log('err in database',err);
-        })
+mongoose()
 
 
 const port = process.env.PORT || 3001;
