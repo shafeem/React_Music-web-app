@@ -1,14 +1,10 @@
 const express =require('express')
 const cors = require('cors')
 
-
-const app = express()
-
 const userrouter = require('./routes/userrouter');
 const adminrouter = require('./routes/adminrouter');
 
-
-
+const app = express()
 
 app.use(cors({
     origin:['http://localhost:5173'],
@@ -18,8 +14,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+
+
+
+
 // app.use('/admin',adminrouter)
-// app.use('/',userrouter)
+app.use('/',userrouter)
 
 
 module.exports = app

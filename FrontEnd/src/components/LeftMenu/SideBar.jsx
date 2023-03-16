@@ -1,13 +1,13 @@
 import React, { ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ApartmentIcon from "@mui/icons-material/Apartment";
 import PersonIcon from "@mui/icons-material/Person";
 import { Email, DashboardCustomize } from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import SettingsIcon from "@mui/icons-material/Settings";
-import LogoutIcon from "@mui/icons-material/Logout";
+// import LogoutIcon from "@mui/icons-material/Logout";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
+// import ApartmentIcon from "@mui/icons-material/Apartment";
 
 
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
@@ -53,7 +53,7 @@ const SideBar = () => {
   const Controlls = [
     { title: "Settings", icon: <SettingsIcon />, link: "/settings" },
     // { title: "Logout", icon: <LogoutIcon />, link: "/logout" } :
-    { title: "LogIn", icon: <LoginOutlinedIcon />, link: "/logout" },
+    { title: "LogIn", icon: <LoginOutlinedIcon />, link: "/login" },
   ];
 
   return (
