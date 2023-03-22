@@ -18,8 +18,8 @@ app.use(express.urlencoded({extended:true}));
 
 
 
-// app.use('/admin',adminrouter)
 app.use('/',userrouter)
+// app.use('/admin',adminrouter)
 
 
 module.exports = app

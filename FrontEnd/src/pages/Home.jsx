@@ -6,7 +6,7 @@ function Home() {
     <>
       <div className="flex-1 px-2 sm:px-0 min-h-screen">
         <div className="flex justify-between items-center">
-          <h3 className="text-3xl font-extralight text-white/50">Dashboard</h3>
+          <h3 className="text-3xl font-extralight text-white/50">Home</h3>
 
           <div className="inline-flex items-center space-x-2">
             {/* Category */}

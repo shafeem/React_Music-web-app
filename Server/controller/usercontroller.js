@@ -38,6 +38,11 @@ const userlogin =async (req,res)=>{
     }
 }
 
+const verifyNumber = async (req,res) =>{
+    console.log(req.body,'this is the body of verify number');
+}
+
 module.exports = {
     userlogin,
+    verifyNumber
 };

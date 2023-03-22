@@ -43,7 +43,7 @@ const NavItem = ({ to, Icon, label }) => {
 const SideBar = () => {
   const Menus = [
     // { title: "Go to Home", icon: <MainSmallIcon className="w-10 h-auto hidden sm:flex"/>, link:"/"},
-    { title: "Dashboard", icon: <DashboardCustomize />, link: "/" },
+    { title: "Home", icon: <DashboardCustomize />, link: "/" },
     { title: "Artists", icon: <PersonIcon />, link: "/artists" },
     { title: "Add Songs", icon: <ControlPointOutlinedIcon />, link: "/addsongs" },
     { title: "Favorites ", icon: <FavoriteBorderOutlinedIcon />, link: "/favorites" },
