@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import axios from "../../axios/axiosinstance";
 import { LoginSocialGoogle } from "reactjs-social-login";
-import { useNavigate } from "react-router-dom";
-import app from "../../firebase/firebase";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
-  getAuth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
+import { Auth } from "../../firebase/firebase";
+import {useDispatch} from  'react-redux'
+import {setLogin} from '../../ToolKit/slice/UserSlice'
 
 function UserLogin() {
   const [user, setUser] = useState("");
   const [number, setNumber] = useState("");
   const [show, setShow] = useState(false);
   const [verifyButton, setVerifyButton] = useState(false);
-  const [opt, setOtp] = useState("");
+  const [Opt, setOtp] = useState("");
   const [numberInput, setNumberInput] = useState(true);
   const [otpSubmit, setOtpSubmit] = useState(false);
+  const [Res,setRes] = useState(null) 
+  const [Verify,setVerify] = useState(false)
 
   const navigate = useNavigate();
-  const auth = getAuth(app);
+  const dispatch = useDispatch()
 
   // const numberVerifiyer = async (event) => {
   //   event.preventDefault();
@@ -56,61 +59,62 @@ function UserLogin() {
   const numberChecker = (e) => {
     let count = number.length;
     setNumber(e.target.value);
-    console.log(number, count, "number");
     if (count == 9) {
       setVerifyButton(true);
     }
   };
 
-  const onCaptchVerify = (e) => {
-    // e.preventDefault();
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
+  const onCaptchVerify = async ()=>{
+    const recaptchaVerifier = new RecaptchaVerifier(
+      'recaptcha-container',
       {
-        size: "invisible",
-        callback: () => {
+        size:'invisible',
+        callback:()=>{
           onSignInSubmit();
-        },
+        }
       },
-      auth
-    );
-  };
+      Auth
+    )
+    recaptchaVerifier.render();
+    const res = await signInWithPhoneNumber(
+      Auth,
+      `+91${number}`,
+      recaptchaVerifier
+    )
+    setRes(res);
+    console.log('otp sended successfully');
+  }
 
   const onSignInSubmit = (event) => {
+
     event.preventDefault();
 
     onCaptchVerify();
-
-    const phonenumber = "+91" + number;
-    const appVerifier = window.RecaptchaVerifier;
-    signInWithPhoneNumber(auth, phonenumber, appVerifier).then(
-      (confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        alert("opt sended successfully");
 
         setShow(true);
         setVerifyButton(false);
         setNumberInput(false);
         setOtpSubmit(true);
-      }
-    );
-    // .catch((error) => {
-    //   console.log('error caught: ' + error);
-    // });
+    
+
+
   };
 
-  const verifyOtp = (e) => {
-    setOtp(e.target.value);
-    window.confirmationResult
-      .confirm(otp)
+  const verifyOtp = async(e) => {
+    e.preventDefault();
+    await Res
+      .confirm(Opt)
       .then((result) => {
+        setVerify(true)
+        console.log(result,'this is the result here');
         const User = result.user;
         console.log(User, "this is the Users");
-        alert("otp verification successfully compleated");
+        alert(result,"otp verification successfully compleated");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
-        alert("otp verification failed");
+        console.log("otp verification failed");
       });
   };
 
@@ -144,8 +148,11 @@ function UserLogin() {
               <label className="block text-sm font-semibold text-gray-800">
                 Enter OTP
               </label>
-              <input
-                onClick={verifyOtp}
+              <input 
+                onChange={(e)=>{
+                  console.log(e.target.value);
+                  setOtp(e.target.value)
+                }}
                 type="text"
                 placeholder="xxxx"
                 className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -171,7 +178,9 @@ function UserLogin() {
 
           {otpSubmit ? (
             <div className="mt-6">
-              <button className="items-center justify-center w-full px-4 py-2 tracking-wide text-gray-800 transition-colors duration-200 transform bg-inherit rounded-md hover:bg-gray-800 hover:text-white focus:outline-none focus:bg-gray-800">
+              <button type="submit"
+              onClick={verifyOtp}
+              className="items-center justify-center w-full px-4 py-2 tracking-wide text-gray-800 transition-colors duration-200 transform bg-inherit rounded-md hover:bg-gray-800 hover:text-white focus:outline-none focus:bg-gray-800">
                 Submit OTP
               </button>
             </div>
