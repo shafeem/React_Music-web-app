@@ -24,21 +24,6 @@ function UserLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  // const numberVerifiyer = async (event) => {
-  //   event.preventDefault();
-  //   console.log(number, "this is the number of the user");
-
-  //   await axios({
-  //     url:"/verifyNumber",
-  //     method:"POST",
-  //     data:{
-  //       number
-  //     }
-  //   }).then(()=>{
-  //     console.log('verify number then worked');
-  //   })
-  // };
-
   const googleAuth = async (datas) => {
     console.log(datas, "this is the data ");
     setUser(datas);
@@ -52,6 +37,11 @@ function UserLogin() {
       },
     }).then((res) => {
       console.log(res.data.token, "this is the token data");
+      dispatch(setLogin({
+        token: res.data.token,
+        email: res.data.email,
+        name: res.data.name
+      }))
       navigate("/");
     });
   };
@@ -95,9 +85,6 @@ function UserLogin() {
         setVerifyButton(false);
         setNumberInput(false);
         setOtpSubmit(true);
-    
-
-
   };
 
   const verifyOtp = async(e) => {
@@ -108,9 +95,8 @@ function UserLogin() {
         setVerify(true)
         console.log(result,'this is the result here');
         const User = result.user;
-        console.log(User, "this is the Users");
-        alert(result,"otp verification successfully compleated");
-        navigate("/");
+        console.log(User.phoneNumber, "this is the Users");
+        backendCaller()
       })
       .catch((error) => {
         console.log(error);
@@ -118,12 +104,33 @@ function UserLogin() {
       });
   };
 
+  const backendCaller = async (event) => {
+
+    console.log(number, "this is the number of the user");
+
+    await axios({
+      url:"/verifyNumber",
+      method:"POST",
+      data:{
+        number
+      }
+    }).then((response)=>{
+      console.log(response);
+    navigate("/");
+      console.log('verify number then worked',response.data);
+      dispatch(setLogin({
+        token: response.data.token,
+        number:number,
+      }))
+    })
+  };
+
   const clientId =
     "647726962490-p5v9fsraj9pnse77f3utlp6jc66h5m7k.apps.googleusercontent.com";
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden pb-56">
-      <div className="w-full p-24 m-auto bg-inherit rounded-md shadow-xl lg:max-w-xl">
+      <div className="w-screen p-24 m-auto bg-inherit rounded-md shadow-xl lg:max-w-xl">
         <form
           className=""
           // onSubmit={(e) => {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { SideBar } from '../components/LeftMenu/SideBar'
-import Home from '../pages/home'
-import Login from '../pages/Login'
+import Home from '../pages/user/home'
+import Login from '../pages/user/Login'
 import image from '../assets/Images/pexels-moose-photos-1037992.jpg'
 const User = () => {
   return (

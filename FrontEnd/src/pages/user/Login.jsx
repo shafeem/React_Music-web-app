@@ -1,12 +1,12 @@
-import React from "react";
-import { SideBar } from "../components/LeftMenu/SideBar";
+import React from 'react'
+import {UserLogin} from '../../components/Login/UserLogin'
 
-function Home() {
+function Login() {
   return (
-    <>
+ <>
       <div className="flex-1 px-2 sm:px-0 min-h-screen">
         <div className="flex justify-between items-center">
-          <h3 className="text-3xl font-extralight text-white/50">Home</h3>
+          <h3 className="text-3xl font-extralight text-white/50">Login</h3>
 
           <div className="inline-flex items-center space-x-2">
             {/* Category */}
@@ -54,13 +54,13 @@ function Home() {
 
         <div className="mt-10">
 
-        {/* <SideBar/> */}
+        {<UserLogin/>}
           
         </div>
       </div>
 
-    </>
-  );
+    </>   
+  )
 }
 
-export default Home;
+export default Login

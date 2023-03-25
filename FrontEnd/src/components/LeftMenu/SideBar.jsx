@@ -5,15 +5,15 @@ import { Email, DashboardCustomize } from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import SettingsIcon from "@mui/icons-material/Settings";
-// import LogoutIcon from "@mui/icons-material/Logout";
+import LogoutIcon from "@mui/icons-material/Logout";
 // import NotificationsIcon from "@mui/icons-material/Notifications";
 // import ApartmentIcon from "@mui/icons-material/Apartment";
 
-
-import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import DownloadForOfflineOutlinedIcon from "@mui/icons-material/DownloadForOfflineOutlined";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import { useSelector } from "react-redux";
 
 const NavItem = ({ to, Icon, label }) => {
   const location = useLocation();
@@ -27,7 +27,6 @@ const NavItem = ({ to, Icon, label }) => {
       arrow
       placement="left-end"
     >
-
       <NavLink
         to={to}
         className={`${
@@ -41,19 +40,38 @@ const NavItem = ({ to, Icon, label }) => {
 };
 
 const SideBar = () => {
+  const { token } = useSelector((state) => state.userSlice);
+  const isAuth  = useSelector((state) => state.userSlice.token)
+
   const Menus = [
     // { title: "Go to Home", icon: <MainSmallIcon className="w-10 h-auto hidden sm:flex"/>, link:"/"},
     { title: "Home", icon: <DashboardCustomize />, link: "/" },
     { title: "Artists", icon: <PersonIcon />, link: "/artists" },
-    { title: "Add Songs", icon: <ControlPointOutlinedIcon />, link: "/addsongs" },
-    { title: "Favorites ", icon: <FavoriteBorderOutlinedIcon />, link: "/favorites" },
-    { title: "Downlords", icon: <DownloadForOfflineOutlinedIcon />, link: "/downloards" },
+    {
+      title: "Add Songs",
+      icon: <ControlPointOutlinedIcon />,
+      link: "/addsongs",
+    },
+    {
+      title: "Favorites ",
+      icon: <FavoriteBorderOutlinedIcon />,
+      link: "/favorites",
+    },
+    {
+      title: "Downlords",
+      icon: <DownloadForOfflineOutlinedIcon />,
+      link: "/downloards",
+    },
   ];
 
-  const Controlls = [
+  const Login = [
     { title: "Settings", icon: <SettingsIcon />, link: "/settings" },
-    // { title: "Logout", icon: <LogoutIcon />, link: "/logout" } :
     { title: "LogIn", icon: <LoginOutlinedIcon />, link: "/login" },
+  ];
+
+  const Logout = [
+    { title: "Settings", icon: <SettingsIcon />, link: "/settings" },
+    { title: "Logout", icon: <LogoutIcon />, link: "/logout" },
   ];
 
   return (
@@ -71,18 +89,29 @@ const SideBar = () => {
           ))}
         </nav>
         <div className="flex items-center flex-row space-x-2 lg:space-x-0 lg:flex-col lg:space-y-2">
-          {Controlls.map((item, index) => (
+        {token ? 
+           Logout.map((item, index) => (
             <NavItem
               key={index}
               to={item.link}
               Icon={item.icon}
               label={item.title}
             />
-          ))}
+          ))
+           :
+          Login.map((item, index) => (
+            <NavItem
+              key={index}
+              to={item.link}
+              Icon={item.icon}
+              label={item.title}
+            />
+          ))
+          }
         </div>
       </div>
     </>
   );
 };
 
-export {SideBar};
+export { SideBar };
